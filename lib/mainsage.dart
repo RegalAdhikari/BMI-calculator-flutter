@@ -13,12 +13,14 @@ class _MainSageState extends State<MainSage> {
   String color = "color";
   Color colorf = Colors.grey;
   Color colorm = Colors.blue;
-  dynamic bmi = " dont press calculate";
-  dynamic height = 0;
-  dynamic weight = 0;
+  int bmi = 0;
+  int height = 0;
+  int weight = 0;
   void _handleBmi(height, weight) {
     setState(() {
-      bmi = height;
+      weight = weightController.value;
+
+      bmi = weight;
     });
   }
 
@@ -33,6 +35,14 @@ class _MainSageState extends State<MainSage> {
         colorf = Colors.red;
       }
     });
+  }
+
+  final weightController = TextEditingController();
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    weightController.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,7 +101,8 @@ class _MainSageState extends State<MainSage> {
                 const Text("Enter your weight in kilograms"),
                 Container(
                   padding: const EdgeInsets.all(12),
-                  child: const TextField(
+                  child: TextField(
+                    controller: weightController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Tap to enter',
@@ -129,7 +140,10 @@ class _MainSageState extends State<MainSage> {
                   "Your BMI is: ",
                   style: TextStyle(fontSize: 20),
                 ),
-                Text(bmi)
+                Text(
+                  "$bmi",
+                  style: TextStyle(fontSize: 20),
+                )
               ],
             ),
           )
